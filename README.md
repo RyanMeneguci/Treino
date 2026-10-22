@@ -1,2 +1,0 @@
-# Treino
-Trino de Academia
