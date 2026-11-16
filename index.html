@@ -334,6 +334,7 @@ let A=null,editingA=null,mk='gord';
 try{A=JSON.parse(localStorage.getItem(KA))}catch(e){}
 if(!Array.isArray(A))A=seedA();
 const saveA=()=>{try{localStorage.setItem(KA,JSON.stringify(A))}catch(e){}};
+try{if(!localStorage.getItem('av-seed-a0')){if(!A.some(x=>x.id==='a0'||x.date==='2025-09-30'))A.push({id:'a0',date:'2025-09-30',peso:90.7,altura:184,idade:49,per:{torax:109,abdomen:93.5,cintura:91.5,quadril:101,bracoE:39,bracoD:39.5,coxaE:60,coxaD:61,pernaE:37,pernaD:38},dob:{tri:8,sub:13,supra:18,pei:10,axi:10,abd:23,coxa:13},prox:'2025-12-29',prop:14});localStorage.setItem('av-seed-a0','1');saveA()}}catch(e){}
 const sortA=()=>A.sort((x,y)=>x.date<y.date?-1:x.date>y.date?1:0);
 const sumO=o=>Object.values(o).reduce((x,y)=>x+(+y||0),0);
 /* Jackson & Pollock 7 dobras (homens) + Siri; confere com o app da academia */
