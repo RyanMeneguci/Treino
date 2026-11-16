@@ -69,12 +69,67 @@ dialog input,dialog textarea{width:100%;margin-top:3px;padding:10px;border:1px s
 .act{display:flex;gap:8px;margin-top:16px;justify-content:flex-end}
 .act button{height:44px;padding:0 18px;border-radius:10px;border:1px solid var(--line);background:transparent;color:var(--ink);font-size:16px}
 .act .pri{background:var(--ac);border-color:var(--ac);color:var(--onac);font-weight:700}
+:root{--c2:#c76a1a}
+@media(prefers-color-scheme:dark){:root{--c2:#f0a35e}}
+.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.top span{font-weight:800;font-size:18px}
+.back{color:var(--ac);font-weight:700;text-decoration:none;padding:8px 0;font-size:16px}
+main.home{padding-bottom:40px;padding-top:28px}
+.home h1{margin:0 0 4px;font-size:30px}
+.home>p{margin:0 0 20px;color:var(--mut)}
+.big{display:block;text-decoration:none;color:var(--ink);background:var(--card);border:1px solid var(--line);border-left:6px solid var(--ac);border-radius:16px;padding:20px 18px;margin-bottom:14px}
+.big b{display:block;font-size:24px;color:var(--ac);margin-bottom:2px}
+.big span{color:var(--mut);font-size:14px;display:block}
+#a-body{padding-bottom:40px}
+.atop{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:6px}
+.atop h2{margin:0;font-size:22px}
+.atop .pri{height:42px;padding:0 14px;border-radius:10px;border:0;background:var(--ac);color:var(--onac);font-weight:700;font-size:15px}
+.sub{margin:6px 0;color:var(--mut);font-size:14px}
+.sub b{color:var(--ink)}
+.kpis{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px}
+.kpi span{display:block;font-size:13px;color:var(--mut)}
+.kpi b{display:block;font-size:26px;font-weight:800;color:var(--ac);line-height:1.2}
+.kpi small{font-size:14px;font-weight:600;color:var(--mut)}
+.kpi i{font-size:13px;color:var(--mut);font-style:normal}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:10px 0 8px}
+.chip{flex:0 0 auto;height:38px;padding:0 14px;border-radius:19px;border:1px solid var(--line);background:var(--card);color:var(--ink);font-size:15px}
+.chip.on{background:var(--ac);border-color:var(--ac);color:var(--onac);font-weight:700}
+.chart{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 8px 12px}
+.chart h3{margin:0 0 4px 8px;font-size:17px}
+.chart svg{width:100%;height:auto;display:block}
+.gl{stroke:var(--line);stroke-width:1}
+.ax{fill:var(--mut);font-size:10px}
+.vl{fill:var(--ink);font-size:11px;font-weight:700}
+.ln{fill:none;stroke-width:3;stroke-linejoin:round;stroke-linecap:round}
+.lg{display:flex;gap:14px;align-items:center;justify-content:center;font-size:14px;color:var(--mut);margin-top:4px}
+.lg i{display:inline-block;width:14px;height:6px;border-radius:3px;margin-right:-8px}
+.hh{margin:22px 0 8px;font-size:18px}
+.hist{display:flex;width:100%;justify-content:space-between;align-items:center;gap:10px;text-align:left;padding:14px;margin-bottom:8px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);font-size:15px}
+.hist span{color:var(--mut);font-size:14px}
+dialog h3{margin:0 0 4px}
+dialog h4{margin:16px 0 4px;color:var(--ac);font-size:15px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.kv{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}
+.kv span{color:var(--mut)}
 [hidden]{display:none!important}
 :focus-visible{outline:3px solid var(--ok);outline-offset:2px}
 </style>
 </head>
 <body>
+<section id="v-home" hidden>
+<main class="home">
+  <h1>Academia</h1>
+  <p>O que vamos ver hoje?</p>
+  <a class="big" href="#treino"><b>Treino</b><span>Séries, cargas e cronômetro de intervalo</span></a>
+  <a class="big" href="#aval"><b>Avaliação física</b><span>Medidas, composição corporal e evolução</span><span id="home-av"></span></a>
+  <div class="bar"><button data-a="exp">Copiar backup</button><button data-a="imp">Restaurar backup</button></div>
+</main>
+</section>
+
+<section id="v-treino" hidden>
 <header>
+  <div class="top"><a class="back" href="#home">‹ Início</a><span>Treino</span></div>
   <div id="tabs"></div>
   <div id="prog"><span id="cnt"></span><div id="bar"><i></i></div></div>
 </header>
@@ -82,6 +137,12 @@ dialog input,dialog textarea{width:100%;margin-top:3px;padding:10px;border:1px s
   <div id="list"></div>
   <div class="bar" id="foot"></div>
 </main>
+</section>
+
+<section id="v-aval" hidden>
+<header><div class="top"><a class="back" href="#home">‹ Início</a><span>Avaliação física</span></div></header>
+<main id="a-body"></main>
+</section>
 
 <div id="tbar">
   <div><div id="tm">00:00</div><div id="tg"></div></div>
@@ -101,6 +162,16 @@ dialog input,dialog textarea{width:100%;margin-top:3px;padding:10px;border:1px s
     <div class="act"><button type="button" id="fc">Cancelar</button><button class="pri" type="submit">Salvar</button></div>
   </form>
 </dialog>
+
+<dialog id="da">
+  <form id="af" onsubmit="return false">
+    <h3>Avaliação física</h3>
+    <div id="afields"></div>
+    <p class="hint">% de gordura, massa magra, massa gorda, IMC, RCQ e somas são calculados automaticamente (Pollock, 7 dobras).</p>
+    <div class="act"><button type="button" id="ac">Cancelar</button><button class="pri" type="submit">Salvar</button></div>
+  </form>
+</dialog>
+<dialog id="dv"><div id="dvb"></div></dialog>
 
 <script>
 const K_='treino-app-v3',m1="1'",m2="2'",s45='45"';
@@ -249,11 +320,136 @@ document.addEventListener('click',ev=>{
   else if(a==='rm'){if(!confirm('Excluir “'+e.name+'”?'))return;d.ex=d.ex.filter(x=>x!==e)}
   else if(a==='ren'){const n=prompt('Novo nome do dia',d.name);if(!n||!n.trim())return;d.name=n.trim()}
   else if(a==='rmday'){if(S.days.length<2){alert('Mantenha pelo menos um dia.');return}if(!confirm('Excluir o treino '+d.name+' inteiro?'))return;S.days.splice(S.cur,1);S.cur=0}
-  else if(a==='exp'){const j=JSON.stringify(S);if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(j).then(()=>alert('Backup copiado. Cole em um bloco de notas ou mensagem para guardar.'),()=>prompt('Copie o backup:',j))}else prompt('Copie o backup:',j);return}
-  else if(a==='imp'){const t=prompt('Cole o backup aqui');if(!t)return;try{const p=JSON.parse(t);if(!ok(p))throw 0;S=norm(p);S.cur=0}catch(x){alert('Backup inválido.');return}}
+  else if(a==='exp'){const j=JSON.stringify({treino:S,aval:A});if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(j).then(()=>alert('Backup copiado. Cole em um bloco de notas ou mensagem para guardar.'),()=>prompt('Copie o backup:',j))}else prompt('Copie o backup:',j);return}
+  else if(a==='imp'){const t=prompt('Cole o backup aqui');if(!t)return;try{const p=JSON.parse(t);if(p.treino||p.aval){if(p.treino&&ok(p.treino)){S=norm(p.treino);S.cur=0}if(Array.isArray(p.aval)){A=p.aval;saveA()}}else{if(!ok(p))throw 0;S=norm(p);S.cur=0}}catch(x){alert('Backup inválido.');return}}
   save();render();
 });
 render();tick();
+/* ===== Avaliação física ===== */
+const KA='avaliacoes-v1';
+const PER=[['torax','Tórax'],['abdomen','Abdômen'],['cintura','Cintura'],['quadril','Quadril'],['bracoE','Braço esquerdo'],['bracoD','Braço direito'],['coxaE','Coxa esquerda'],['coxaD','Coxa direita'],['pernaE','Perna esquerda'],['pernaD','Perna direita']];
+const DOB=[['tri','Tricipital'],['sub','Subescapular'],['supra','Supra-ilíaca'],['pei','Peitoral'],['axi','Axilar média'],['abd','Abdominal'],['coxa','Coxa']];
+const seedA=()=>[{id:'a1',date:'2026-03-12',peso:85.1,altura:184,idade:49,per:{torax:107,abdomen:91,cintura:88,quadril:100,bracoE:38.5,bracoD:38,coxaE:57,coxaD:58.5,pernaE:36,pernaD:37},dob:{tri:6,sub:11,supra:14,pei:10,axi:9,abd:22,coxa:13},prox:'2026-06-10',prop:14}];
+let A=null,editingA=null,mk='gord';
+try{A=JSON.parse(localStorage.getItem(KA))}catch(e){}
+if(!Array.isArray(A))A=seedA();
+const saveA=()=>{try{localStorage.setItem(KA,JSON.stringify(A))}catch(e){}};
+const sortA=()=>A.sort((x,y)=>x.date<y.date?-1:x.date>y.date?1:0);
+const sumO=o=>Object.values(o).reduce((x,y)=>x+(+y||0),0);
+/* Jackson & Pollock 7 dobras (homens) + Siri; confere com o app da academia */
+const calc=a=>{const sd=sumO(a.dob),den=1.112-0.00043499*sd+0.00000055*sd*sd-0.00028826*a.idade,gord=495/den-450,mg=a.peso*gord/100;return{sd,gord,mg,mm:a.peso-mg,imc:a.peso/Math.pow(a.altura/100,2),rcq:a.per.cintura/a.per.quadril,somaPer:sumO(a.per)}};
+const nf=(v,d=1)=>Number(v).toFixed(d).replace('.',',');
+const dt=s=>s?s.split('-').reverse().join('/'):'';
+const ds=s=>{const p=s.split('-');return p[2]+'/'+p[1]+'/'+p[0].slice(2)};
+const imcCl=v=>v<18.5?'Abaixo do peso':v<25?'Peso normal':v<30?'Sobrepeso':'Obesidade';
+const MET=[
+{k:'gord',l:'% Gordura',u:'%',d:2,s:[a=>calc(a).gord]},
+{k:'peso',l:'Peso',u:'kg',d:1,s:[a=>a.peso]},
+{k:'mm',l:'Massa magra',u:'kg',d:2,s:[a=>calc(a).mm]},
+{k:'mg',l:'Massa gorda',u:'kg',d:2,s:[a=>calc(a).mg]},
+{k:'imc',l:'IMC',u:'',d:1,s:[a=>calc(a).imc]},
+{k:'cintura',l:'Cintura',u:'cm',d:1,s:[a=>a.per.cintura]},
+{k:'abdomen',l:'Abdômen',u:'cm',d:1,s:[a=>a.per.abdomen]},
+{k:'torax',l:'Tórax',u:'cm',d:1,s:[a=>a.per.torax]},
+{k:'quadril',l:'Quadril',u:'cm',d:1,s:[a=>a.per.quadril]},
+{k:'braco',l:'Braços',u:'cm',d:1,n:['Esquerdo','Direito'],s:[a=>a.per.bracoE,a=>a.per.bracoD]},
+{k:'coxa',l:'Coxas',u:'cm',d:1,n:['Esquerda','Direita'],s:[a=>a.per.coxaE,a=>a.per.coxaD]},
+{k:'perna',l:'Pernas',u:'cm',d:1,n:['Esquerda','Direita'],s:[a=>a.per.pernaE,a=>a.per.pernaD]},
+{k:'somaper',l:'Soma perimetria',u:'cm',d:0,s:[a=>calc(a).somaPer]},
+{k:'dobras',l:'Soma das dobras',u:'mm',d:0,s:[a=>calc(a).sd]}];
+
+function chart(m){
+  const W=340,H=210,L=40,R=18,TT=26,BB=32,n=A.length;
+  const ser=m.s.map(f=>A.map(a=>+f(a)));
+  const all=ser.flat();let lo=Math.min(...all),hi=Math.max(...all);
+  if(lo===hi){lo-=1;hi+=1}
+  const pd=(hi-lo)*.25;lo-=pd;hi+=pd;
+  const X=i=>n===1?(L+W-R)/2:L+(W-L-R)*i/(n-1),Y=v=>TT+(H-TT-BB)*(1-(v-lo)/(hi-lo));
+  const dd=(hi-lo)<8?1:0,step=Math.ceil(n/6);
+  let g='';
+  for(let i=0;i<4;i++){const v=lo+(hi-lo)*i/3,y=Y(v);g+=`<line class="gl" x1="${L}" x2="${W-R}" y1="${y}" y2="${y}"/><text class="ax" x="${L-6}" y="${y+4}" text-anchor="end">${nf(v,dd)}</text>`}
+  A.forEach((a,i)=>{if(i%step===0||i===n-1)g+=`<text class="ax" x="${X(i)}" y="${H-10}" text-anchor="middle">${ds(a.date)}</text>`});
+  ser.forEach((vals,si)=>{
+    const col=si?'var(--c2)':'var(--ac)';
+    if(n>1)g+=`<polyline class="ln" style="stroke:${col}" points="${vals.map((v,i)=>X(i)+','+Y(v)).join(' ')}"/>`;
+    vals.forEach((v,i)=>{g+=`<circle cx="${X(i)}" cy="${Y(v)}" r="4.5" style="fill:${col}"/>`;if(n<=8||i===n-1)g+=`<text class="vl" x="${X(i)}" y="${Y(v)+(si?18:-9)}" text-anchor="middle">${nf(v,m.d)}</text>`});
+  });
+  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Evolução de ${m.l}">${g}</svg>`;
+}
+
+function rA(){
+  sortA();const el=$('#a-body');
+  const top='<div class="atop"><h2>Evolução</h2><button class="pri" data-av="new">+ Nova avaliação</button></div>';
+  if(!A.length){el.innerHTML=top+'<div class="empty">Nenhuma avaliação cadastrada.</div>';return}
+  const last=A[A.length-1],prev=A.length>1?A[A.length-2]:null,c=calc(last),p=prev?calc(prev):null;
+  const kpi=(l,v,u,d,pv)=>`<div class="kpi"><span>${l}</span><b>${nf(v,d)}<small> ${u}</small></b>${pv==null?'':`<i>${v>=pv?'+':'−'}${nf(Math.abs(v-pv),d)} ${u}</i>`}</div>`;
+  const m=MET.find(x=>x.k===mk)||MET[0];
+  const lg=m.n?`<div class="lg"><i style="background:var(--ac)"></i>${m.n[0]}<i style="background:var(--c2)"></i>${m.n[1]}</div>`:'';
+  el.innerHTML=top+`<p class="sub">Última avaliação: <b>${dt(last.date)}</b>${prev?` · variação desde ${dt(prev.date)}`:''}</p>
+  <div class="kpis">${kpi('Peso',last.peso,'kg',1,prev&&prev.peso)}${kpi('% Gordura',c.gord,'%',2,p&&p.gord)}${kpi('Massa magra',c.mm,'kg',2,p&&p.mm)}${kpi('Massa gorda',c.mg,'kg',2,p&&p.mg)}</div>
+  <p class="sub">IMC <b>${nf(c.imc)}</b> · ${imcCl(c.imc)} · RCQ <b>${nf(c.rcq,2)}</b> · Soma perimetria <b>${nf(c.somaPer,0)} cm</b></p>
+  ${last.prox?`<p class="sub">Próxima avaliação: <b>${dt(last.prox)}</b>${last.prop!=null?` · % proposta: <b>${nf(last.prop,0)}%</b>`:''}</p>`:''}
+  <div class="chips">${MET.map(x=>`<button class="chip${x.k===mk?' on':''}" data-av="met" data-k="${x.k}">${x.l}</button>`).join('')}</div>
+  <div class="chart"><h3>${m.l}${m.u?' ('+m.u+')':''}</h3>${chart(m)}${lg}${A.length<2?'<p class="sub">Com uma avaliação só aparecem os pontos. A linha de evolução surge a partir da segunda.</p>':''}</div>
+  <h3 class="hh">Histórico</h3>${[...A].reverse().map(a=>`<button class="hist" data-av="view" data-id="${a.id}"><b>${dt(a.date)}</b><span>${nf(a.peso)} kg · ${nf(calc(a).gord,1)}% de gordura</span></button>`).join('')}`;
+}
+
+function viewA(a){
+  if(!a)return;const c=calc(a);
+  const rows=(t,arr)=>`<h4>${t}</h4>`+arr.map(([l,v,u])=>`<div class="kv"><span>${l}</span><b>${v}${u?' '+u:''}</b></div>`).join('');
+  $('#dvb').innerHTML=`<h3>Avaliação de ${dt(a.date)}</h3>`
+   +rows('Geral',[['Peso',nf(a.peso),'kg'],['Estatura',nf(a.altura,0),'cm'],['Idade',nf(a.idade,0),'anos']])
+   +rows('Resultados',[['% de gordura',nf(c.gord,2),'%'],['Massa magra',nf(c.mm,2),'kg'],['Massa gorda',nf(c.mg,2),'kg'],['IMC',nf(c.imc)+' · '+imcCl(c.imc),''],['RCQ',nf(c.rcq,2),''],['Soma perimetria',nf(c.somaPer,0),'cm'],['Soma das dobras',nf(c.sd,0),'mm']])
+   +rows('Perimetria',PER.map(([k,l])=>[l,nf(a.per[k]),'cm']))
+   +rows('Dobras cutâneas',DOB.map(([k,l])=>[l,nf(a.dob[k],0),'mm']))
+   +(a.prox?rows('Outros',[['Próxima avaliação',dt(a.prox),''],['% proposta',a.prop!=null?nf(a.prop,0):'-','%']]):'')
+   +`<div class="act"><button data-av="close">Fechar</button><button data-av="del" data-id="${a.id}" style="color:var(--bad)">Excluir</button><button class="pri" data-av="edit" data-id="${a.id}">Editar</button></div>`;
+  $('#dv').showModal();
+}
+
+const fld=(n,l,d)=>`<label>${l}<input name="${n}" ${d?'type="date"':'type="text" inputmode="decimal"'} autocomplete="off"></label>`;
+$('#afields').innerHTML=`<div class="g2">${fld('date','Data da avaliação',1)}${fld('peso','Peso (kg)')}${fld('altura','Estatura (cm)')}${fld('idade','Idade (anos)')}</div><h4>Perimetria (cm)</h4><div class="g2">${PER.map(([k,l])=>fld('p_'+k,l)).join('')}</div><h4>Dobras cutâneas (mm)</h4><div class="g2">${DOB.map(([k,l])=>fld('d_'+k,l)).join('')}</div><h4>Outros</h4><div class="g2">${fld('prox','Próxima avaliação',1)}${fld('prop','% proposta')}</div>`;
+function openA(a){
+  editingA=a||null;const f=$('#af').elements,ref=a||A[A.length-1]||{};
+  const set=(n,v)=>{f[n].value=v==null?'':String(v).replace('.',',')};
+  const iso=new Date(Date.now()-new Date().getTimezoneOffset()*6e4).toISOString().slice(0,10);
+  f.date.value=a?a.date:iso;set('peso',a?a.peso:'');set('altura',ref.altura);set('idade',ref.idade);
+  PER.forEach(([k])=>set('p_'+k,a?a.per[k]:''));DOB.forEach(([k])=>set('d_'+k,a?a.dob[k]:''));
+  f.prox.value=(a&&a.prox)||'';set('prop',a?a.prop:'');
+  $('#da').showModal();
+}
+$('#ac').onclick=()=>$('#da').close();
+$('#af').addEventListener('submit',()=>{
+  const f=$('#af').elements,pn=v=>{const x=parseFloat(String(v).replace(',','.'));return isNaN(x)?null:x};
+  const a={id:editingA?editingA.id:uid(),date:f.date.value,peso:pn(f.peso.value),altura:pn(f.altura.value),idade:pn(f.idade.value),per:{},dob:{},prox:f.prox.value||'',prop:pn(f.prop.value)};
+  PER.forEach(([k])=>a.per[k]=pn(f['p_'+k].value));DOB.forEach(([k])=>a.dob[k]=pn(f['d_'+k].value));
+  const need=[a.date,a.peso,a.altura,a.idade,...Object.values(a.per),...Object.values(a.dob)];
+  if(need.some(v=>v==null||v==='')){alert('Preencha data, peso, estatura, idade, perimetria e dobras para calcular o resultado.');return}
+  if(editingA)Object.assign(editingA,a);else A.push(a);
+  saveA();$('#da').close();rA();
+});
+document.addEventListener('click',ev=>{
+  const b=ev.target.closest('[data-av]');if(!b)return;
+  const a=b.dataset.av,item=A.find(x=>x.id===b.dataset.id);
+  if(a==='met'){mk=b.dataset.k;rA()}
+  else if(a==='new')openA();
+  else if(a==='view')viewA(item);
+  else if(a==='edit'&&item){$('#dv').close();openA(item)}
+  else if(a==='del'&&item){if(!confirm('Excluir a avaliação de '+dt(item.date)+'?'))return;A=A.filter(x=>x!==item);saveA();$('#dv').close();rA()}
+  else if(a==='close')$('#dv').close();
+});
+
+/* ===== Menu inicial / rotas ===== */
+function route(){
+  const h=(location.hash||'#home').slice(1),w=['home','treino','aval'].includes(h)?h:'home';
+  ['home','treino','aval'].forEach(x=>{$('#v-'+x).hidden=x!==w});
+  $('#tbar').style.display=w==='treino'?'':'none';
+  sortA();$('#home-av').textContent=A.length?'Última avaliação: '+dt(A[A.length-1].date):'Nenhuma avaliação cadastrada';
+  if(w==='aval')rA();
+  window.scrollTo(0,0);
+}
+addEventListener('hashchange',route);
+route();
 </script>
 </body>
 </html>
